@@ -1,0 +1,8 @@
+{
+  "name": "typescript-clean-architecture",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:GustavoDelfim/typescript-clean-architecture.git",
+  "author": "Gustavo Delfim <gusttavodelfim@gmail.com>",
+  "license": "MIT"
+}
