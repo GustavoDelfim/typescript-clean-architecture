@@ -16,6 +16,9 @@ export class Email {
     if (!local) {
       return false
     }
+    if (!domain) {
+      return false
+    }
     return true
   }
 }
