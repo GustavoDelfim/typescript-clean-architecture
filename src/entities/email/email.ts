@@ -21,6 +21,9 @@ export class Email {
     }
 
     const [host, region] = domain.split('.')
+    if (!region) {
+      return false
+    }
     if (host.length > 63) {
       return false
     }
