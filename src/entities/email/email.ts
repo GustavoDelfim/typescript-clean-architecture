@@ -19,6 +19,14 @@ export class Email {
     if (!domain) {
       return false
     }
+
+    const [host, region] = domain.split('.')
+    if (host.length > 63) {
+      return false
+    }
+    if (region.length > 63) {
+      return false
+    }
     return true
   }
 }
