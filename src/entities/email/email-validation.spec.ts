@@ -16,8 +16,13 @@ describe('Email validateion', () => {
     expect(Email.validate(email)).toBeFalsy()
   })
 
-  test('should not accept strings larges than 320 chars', () => {
+  test('should not accept strings larger than 320 chars', () => {
     const email: string = `gusttavodelfim@${'gmail'.repeat(100)}.com`
+    expect(Email.validate(email)).toBeFalsy()
+  })
+
+  test('should not accept domain larger than 255 chars', () => {
+    const email: string = `gusttavodelfim@${'gmail'.repeat(52)}.com`
     expect(Email.validate(email)).toBeFalsy()
   })
 })
