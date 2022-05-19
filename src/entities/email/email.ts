@@ -19,21 +19,14 @@ export class Email {
     if (!domain) {
       return false
     }
-
-    const [host, region] = domain.split('.')
-    if (!region) {
+    const domainParts = domain.split('.')
+    if (domainParts.some(part => part.length > 63)) {
       return false
     }
-    if ([host, region].some(part => part.length > 63)) {
-      return false
-    }
-
     const emailRegex = /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/
-
     if (!emailRegex.test(email)) {
       return false
     }
-
     return true
   }
 }
