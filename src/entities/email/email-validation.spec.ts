@@ -40,7 +40,7 @@ describe('Email validateion', () => {
     const email: string = 'gusttavodelfim@gmail'
     expect(Email.validate(email)).toBeFalsy()
   })
-  
+
   test('should not accept domain first part larger than 63 chars', () => {
     const email: string = `gusttavodelfim@${'g'.repeat(64)}.com}`
     expect(Email.validate(email)).toBeFalsy()
@@ -48,6 +48,11 @@ describe('Email validateion', () => {
 
   test('should not accept domain second part larger than 63 chars', () => {
     const email: string = `gusttavodelfim@gmail.${'c'.repeat(64)}}`
+    expect(Email.validate(email)).toBeFalsy()
+  })
+
+  test('should not accept local part with invalid char', () => {
+    const email: string = 'gus ttavodelfim@gmail.gmail.com'
     expect(Email.validate(email)).toBeFalsy()
   })
 })
