@@ -35,4 +35,14 @@ describe('Email validateion', () => {
     const email: string = 'gusttavodelfim@'
     expect(Email.validate(email)).toBeFalsy()
   })
+
+  test('should not accept domain first part larger than 63 chars', () => {
+    const email: string = `gusttavodelfim@${'g'.repeat(64)}.com}`
+    expect(Email.validate(email)).toBeFalsy()
+  })
+
+  test('should not accept domain second part larger than 63 chars', () => {
+    const email: string = `gusttavodelfim@gmail.${'c'.repeat(64)}}`
+    expect(Email.validate(email)).toBeFalsy()
+  })
 })
