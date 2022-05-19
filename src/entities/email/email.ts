@@ -24,12 +24,10 @@ export class Email {
     if (!region) {
       return false
     }
-    if (host.length > 63) {
+    if ([host, region].some(part => part.length > 63)) {
       return false
     }
-    if (region.length > 63) {
-      return false
-    }
+
     return true
   }
 }
