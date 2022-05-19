@@ -52,7 +52,17 @@ describe('Email validateion', () => {
   })
 
   test('should not accept local part with invalid char', () => {
-    const email: string = 'gus ttavodelfim@gmail.gmail.com'
+    const email: string = 'gus ttavodelfim@gmail.com'
+    expect(Email.validate(email)).toBeFalsy()
+  })
+
+  test('should not accept local part with two dots', () => {
+    const email: string = 'gus..ttavodelfim@gmail.com'
+    expect(Email.validate(email)).toBeFalsy()
+  })
+
+  test('should not accept local part with ending dot', () => {
+    const email: string = 'gusttavodelfim.@gmail.com'
     expect(Email.validate(email)).toBeFalsy()
   })
 })
