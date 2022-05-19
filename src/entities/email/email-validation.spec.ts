@@ -10,4 +10,9 @@ describe('Email validateion', () => {
     const email: string = 'gusttavodelfim@gmail.com'
     expect(Email.validate(email)).toBeTruthy()
   })
+
+  test('should accept local part çarger than 64 chars', () => {
+    const email: string = `${'g'.repeat(65)}@gmail.com`
+    expect(Email.validate(email)).toBeFalsy()
+  })
 })
