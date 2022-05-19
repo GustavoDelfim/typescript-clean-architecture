@@ -6,10 +6,12 @@ import { Name } from '../name/name'
 import { UserData } from './user-data'
 
 export class User {
-  public readonly name: string
+  public readonly name: Name
+  public readonly email: Email
 
-  private constructor (name: string) {
+  private constructor (name: Name, email: Email) {
     this.name = name
+    this.email = email
   }
 
   static create (userData: UserData): Either<InvalidNameError | InvalidEmailError, User> {
@@ -23,6 +25,9 @@ export class User {
       return left(new InvalidEmailError())
     }
 
-    return right(new User(userData.name))
+    const name = nameOrError.value as Name
+    const email = emailOrError.value as Email
+
+    return right(new User(name, email))
   }
 }
