@@ -25,9 +25,6 @@ export class User {
       return left(new InvalidEmailError())
     }
 
-    const name = nameOrError.value as Name
-    const email = emailOrError.value as Email
-
-    return right(new User(name, email))
+    return right(new User(nameOrError.value, emailOrError.value))
   }
 }
