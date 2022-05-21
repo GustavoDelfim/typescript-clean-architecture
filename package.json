@@ -31,6 +31,6 @@
     "test-ci": "yarn test -- --coverage"
   },
   "lint-staged": {
-    "*": "yarn run test-staged --passWithNoTests"
+    "*": "yarn test-staged --passWithNoTests"
   }
 }
