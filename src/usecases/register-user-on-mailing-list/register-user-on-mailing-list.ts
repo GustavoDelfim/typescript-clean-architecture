@@ -23,6 +23,7 @@ export class RegisterUserOnMailingList {
     if (!(await this.userRepo.exists(request))) {
       await this.userRepo.add(request)
     }
+
     return right(request)
   }
 }
