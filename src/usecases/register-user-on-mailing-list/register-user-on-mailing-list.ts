@@ -3,8 +3,9 @@ import { User } from '@/entities'
 import { UserData } from '@/entities/user'
 import { Either, left, right } from '@/shared'
 import { UserRepository } from '@/usecases/ports'
+import { UseCase } from '@/usecases/ports'
 
-export class RegisterUserOnMailingList {
+export class RegisterUserOnMailingList implements UseCase {
   private readonly userRepo: UserRepository
 
   constructor (userRepo: UserRepository) {
