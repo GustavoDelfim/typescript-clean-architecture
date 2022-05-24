@@ -1,5 +1,7 @@
 import { UserData } from "@/entities/user";
+import { left } from "@/shared";
 import { RegisterUserOnMailingList } from "@/usecases";
+import { MissingParamError } from "./errors/missing-param-error";
 import { HttpRequest, HttpResponse } from "./ports";
 import { badRequest, created } from "./util";
 
@@ -11,13 +13,23 @@ export class RegisterUserController {
   }
 
   public async handle (request: HttpRequest): Promise<HttpResponse> {
-    const userData: UserData = request.body
+    const { body } = request
+
+    const missingParam = []
+    if (!body.name) missingParam.push('name')
+    if (!body.email) missingParam.push('email')
+    
+    if (missingParam.length) {
+      return badRequest(new MissingParamError(missingParam.join(', ')))
+    }
+    
+    const userData: UserData = body
     const response = await this.usecase.perform(userData)
 
-    if (response.isRight()) {
-      return created(response.value)
+    if (response.isLeft()) {
+      return badRequest(response.value)
     }
-
-    return badRequest(response.value)
+    
+    return created(response.value)
   } 
 }
