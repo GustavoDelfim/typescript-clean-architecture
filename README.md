@@ -1,1 +1,4 @@
-# typescript-clean-architecture
+# Clean Architecture
+# TDD
+# DDD
+# Typescript
