@@ -1,3 +1,3 @@
 export interface UseCase {
-  perform (reuqest: any): Promise<any>
+  perform (request: any): Promise<any>
 }
