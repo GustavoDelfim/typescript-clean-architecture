@@ -1,11 +1,11 @@
-import { InvalidEmailError, InvalidNameError } from "@/entities/errors"
-import { UserData } from "@/entities/user"
-import { RegisterUserOnMailingList } from "@/usecases"
-import { UseCase, UserRepository } from "@/usecases/ports"
-import { MissingParamError } from "@/web-controllers/errors/missing-param-error"
-import { HttpRequest, HttpResponse } from "@/web-controllers/ports"
-import { RegisterUserController } from "@/web-controllers/register-user-controller"
-import { InMemoryUserRepository } from "@test/usecases/register-user-on-mailing-list/repository/in-memory-user-repository"
+import { InvalidEmailError, InvalidNameError } from '@/entities/errors'
+import { UserData } from '@/entities/user'
+import { RegisterUserOnMailingList } from '@/usecases'
+import { UseCase, UserRepository } from '@/usecases/ports'
+import { MissingParamError } from '@/web-controllers/errors/missing-param-error'
+import { HttpRequest, HttpResponse } from '@/web-controllers/ports'
+import { RegisterUserController } from '@/web-controllers/register-user-controller'
+import { InMemoryUserRepository } from '@test/usecases/register-user-on-mailing-list/repository/in-memory-user-repository'
 
 describe('Sign Up web controller', () => {
   const users: UserData[] = []
