@@ -27,7 +27,7 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "build": "rimraf dist && tsc -p tsconfig-build.json dist",
+    "build": "rimraf dist && tsc -p tsconfig-build.json --outDir dist",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test-verbose": "jest --passWithNoTests --runInBand",
     "test-unit": "yarn test -- --watch -c jest-unit-config.js",
