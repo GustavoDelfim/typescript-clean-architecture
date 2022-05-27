@@ -11,16 +11,35 @@ describe('Mongodb User Repository', () => {
   })
 
   beforeEach(async () => {
-    MongoHelper.clearCollection('users ')
+    MongoHelper.clearCollection('users')
   })
 
-  test('ehwn user is added, it should exist', async () => {
+  test('when user is added, it should exist', async () => {
     const userRepository = new MongodbUserRepository()
     const userDate = {
       name: 'Gustavo',
       email: 'gusttavodelfim@gmail.com'
     }
     await userRepository.add(userDate)
-    expect(await userRepository.exists(userDate)).toBeTruthy()
+    const found = await userRepository.exists(userDate)
+    expect(found).toBeTruthy()
+  })
+
+  test('fild all users return all added users', async () => {
+    const userRepository = new MongodbUserRepository()
+    const userDate1 = {
+      name: 'Any 1',
+      email: 'any1@gmail.com'
+    }
+    const userDate2 = {
+      name: 'Any 2',
+      email: 'any2@gmail.com'
+    }
+    await userRepository.add(userDate1)
+    await userRepository.add(userDate2)
+
+    const allUsers = await userRepository.findAllUsers()
+    expect(allUsers[0].name).toBe(userDate1.name)
+    expect(allUsers[1].name).toBe(userDate2.name)
   })
 })
