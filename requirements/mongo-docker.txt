@@ -1,4 +1,5 @@
 docker run -d --name some-mongo \
 	-e MONGO_INITDB_ROOT_USERNAME=mongo \
 	-e MONGO_INITDB_ROOT_PASSWORD=mongo \
+	-p 8081:8081 \
 	mongo
