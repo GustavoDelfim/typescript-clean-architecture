@@ -1,7 +1,9 @@
 import { InvalidEmailError } from '@/entities/errors'
 import { Right } from '@/shared'
+import { MailServiceError } from '@/usecases/errors/mail-service-error'
 import { SendEmail } from '@/usecases/send-email'
 import { EmailOptions } from '@/usecases/send-email/posts/email-service'
+import { MailServiceErrorStub } from './mail-service-error-stub'
 import { MailServiceSuccessStub } from './mail-service-success-stub'
 
 const attachmentFilePath = '../resources/text.txt'
@@ -44,11 +46,20 @@ describe('Send email to user', () => {
   test('should not try to email with invalid email address', async () => {
     const emailServiceSuccessStub = new MailServiceSuccessStub()
     const useCase = new SendEmail(mailOptions, emailServiceSuccessStub)
-
     const response = await useCase.perform({
       name: toName,
       email: 'invalid_email'
     })
     expect(response.value).toBeInstanceOf(InvalidEmailError)
+  })
+
+  test('should return error wen email service fails', async () => {
+    const emailServiceErrorStub = new MailServiceErrorStub()
+    const useCase = new SendEmail(mailOptions, emailServiceErrorStub)
+    const response = await useCase.perform({
+      name: toName,
+      email: toEmail
+    })
+    expect(response.value).toBeInstanceOf(MailServiceError)
   })
 })
