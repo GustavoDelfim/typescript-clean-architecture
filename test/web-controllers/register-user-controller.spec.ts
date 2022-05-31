@@ -7,12 +7,49 @@ import { HttpRequest, HttpResponse } from '@/web-controllers/ports'
 import { RegisterUserController } from '@/web-controllers/register-user-controller'
 import { InMemoryUserRepository } from '@/usecases/register-user-on-mailing-list/repository/in-memory-user-repository'
 import { ErrorThrwoingUseCaseStub } from './error-throwing-usecase-stub'
+import { MailServiceSuccessStub } from '@test/usecases/send-email/mail-service-success-stub'
+import { EmailOptions } from '@/usecases/send-email/posts/email-service'
+import { RegisterAndSendEmail } from '@/usecases/register-and-send-email/register-end-send-email'
+import { SendEmail } from '@/usecases/send-email'
+
+const attachmentFilePath = '../resources/text.txt'
+const fromName = 'Test'
+const fromEmail = 'from_email@email.com'
+const toName = 'any_name'
+const toEmail = 'any_email@email.com'
+const subject = 'Test e-mail'
+const emailbody = 'Hello word attachement test'
+const emailBodyHtml = '<b>Hello word attachement test</b>'
+const attachments = [{
+  filename: attachmentFilePath,
+  contentType: 'text/plain'
+}]
+
+const mailOptions: EmailOptions = {
+  host: 'test',
+  port: 867,
+  username: 'test',
+  password: 'test',
+  from: `${fromName} ${fromEmail}`,
+  to: `${toName} <${toEmail}>`,
+  subject,
+  text: emailbody,
+  html: emailBodyHtml,
+  attachments
+}
 
 describe('Sign Up web controller', () => {
   const users: UserData[] = []
-  const repo: UserRepository = new InMemoryUserRepository(users)
-  const usecase: UseCase = new RegisterUserOnMailingList(repo)
-  const controller: RegisterUserController = new RegisterUserController(usecase)
+  const userRepo: UserRepository = new InMemoryUserRepository(users)
+  const registerUseCase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepo)
+
+  const mailServiceSuccess = new MailServiceSuccessStub()
+  const sendEmailUseCase = new SendEmail(mailOptions, mailServiceSuccess)
+
+  const registerAndSendEmailUseCase: RegisterAndSendEmail =
+    new RegisterAndSendEmail(registerUseCase, sendEmailUseCase)
+
+  const controller: RegisterUserController = new RegisterUserController(registerAndSendEmailUseCase)
 
   test('should return status code 201 when request contains valid user data', async () => {
     const request: HttpRequest = {
@@ -87,7 +124,7 @@ describe('Sign Up web controller', () => {
         email: 'gusttavodelfim'
       }
     }
-    const usecaseWithServerError: UseCase = new ErrorThrwoingUseCaseStub(repo)
+    const usecaseWithServerError: UseCase = new ErrorThrwoingUseCaseStub(userRepo)
     const controllerWithError: RegisterUserController = new RegisterUserController(usecaseWithServerError)
     const response: HttpResponse = await controllerWithError.handle(request)
     expect(response.body).toBeInstanceOf(Error)
