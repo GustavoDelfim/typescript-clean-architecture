@@ -12,7 +12,7 @@ describe('Register Route', () => {
   })
 
   beforeEach(async () => {
-    MongoHelper.clearCollection('users')
+    await MongoHelper.clearCollection('users')
   })
 
   test('should return an acount on success', async () => {
