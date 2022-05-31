@@ -1,3 +1,4 @@
+import { InvalidEmailError } from '@/entities/errors'
 import { Right } from '@/shared'
 import { SendEmail } from '@/usecases/send-email'
 import { EmailOptions } from '@/usecases/send-email/posts/email-service'
@@ -23,10 +24,10 @@ const mailOptions: EmailOptions = {
   password: 'test',
   from: `${fromName} ${fromEmail}`,
   to: `${toName} <${toEmail}>`,
-  subject: subject,
+  subject,
   text: emailbody,
   html: emailBodyHtml,
-  attachments: attachments
+  attachments
 }
 
 describe('Send email to user', () => {
@@ -38,5 +39,16 @@ describe('Send email to user', () => {
       email: toEmail
     })
     expect(response).toBeInstanceOf(Right)
+  })
+
+  test('should not try to email with invalid email address', async () => {
+    const emailServiceSuccessStub = new MailServiceSuccessStub()
+    const useCase = new SendEmail(mailOptions, emailServiceSuccessStub)
+
+    const response = await useCase.perform({
+      name: toName,
+      email: 'invalid_email'
+    })
+    expect(response.value).toBeInstanceOf(InvalidEmailError)
   })
 })
