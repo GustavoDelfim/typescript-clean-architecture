@@ -41,14 +41,6 @@ describe('Send email to user', () => {
     expect(response.to).toBe(`${toName} <${toEmail}>`)
   })
 
-  test('should not try to email with invalid email address', async () => {
-    const emailServiceSuccessStub = new MailServiceSuccessStub()
-    const useCase = new SendEmail(mailOptions, emailServiceSuccessStub)
-    const user = User.create({ name: toName, email: toEmail }).value as User
-    const response = await useCase.perform(user)
-    expect(response.value).toBeInstanceOf(InvalidEmailError)
-  })
-
   test('should return error wen email service fails', async () => {
     const emailServiceErrorStub = new MailServiceErrorStub()
     const useCase = new SendEmail(mailOptions, emailServiceErrorStub)

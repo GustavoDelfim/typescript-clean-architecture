@@ -42,8 +42,7 @@ describe('Register and send e-mail use case', () => {
     const mailServiceMock = new MailServiceMock()
     const sendEmailUseCase = new SendEmail(mailOptions, mailServiceMock)
 
-    const registerAndSendEmailUseCase: RegisterAndSendEmail =
-      new RegisterAndSendEmail(registerUseCase, sendEmailUseCase)
+    const registerAndSendEmailUseCase: RegisterAndSendEmail = new RegisterAndSendEmail(registerUseCase, sendEmailUseCase)
 
     const name = 'Gustavo'
     const email = 'gusttavodelfim@gmail.com'
