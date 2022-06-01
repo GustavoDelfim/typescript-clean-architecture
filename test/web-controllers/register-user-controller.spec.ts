@@ -51,7 +51,7 @@ describe('Sign Up web controller', () => {
 
   const controller: RegisterUserController = new RegisterUserController(registerAndSendEmailUseCase)
 
-  test('should return status code 201 when request contains valid user data', async () => {
+  test('should return status code ok when request contains valid user data', async () => {
     const request: HttpRequest = {
       body: {
         name: 'Gustavo Delfim',
@@ -60,7 +60,7 @@ describe('Sign Up web controller', () => {
     }
     const response: HttpResponse = await controller.handle(request)
     expect(response.body).toEqual(request.body)
-    expect(response.statusCode).toEqual(201)
+    expect(response.statusCode).toEqual(200)
   })
 
   test('should return status code 400 when request contains ivalid name', async () => {
