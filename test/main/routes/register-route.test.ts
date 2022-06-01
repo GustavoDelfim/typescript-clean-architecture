@@ -26,5 +26,5 @@ describe('Register Route', () => {
       .send(userData)
       .expect(200)
       .expect(userData)
-  })
+  }, 20000)
 })
