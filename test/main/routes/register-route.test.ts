@@ -24,7 +24,7 @@ describe('Register Route', () => {
     await request(app)
       .post('/api/register')
       .send(userData)
-      .expect(201)
+      .expect(200)
       .expect(userData)
   })
 })
